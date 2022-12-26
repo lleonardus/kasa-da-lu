@@ -9,8 +9,8 @@ INSERT INTO french_toasts(flavor, price) VALUES ('Nutella', 7);
 
 INSERT INTO clients(name, lastname, phone) VALUES ('Leonardo', 'Sousa', '4002-8922');
 INSERT INTO clients(name, lastname, phone) VALUES ('Carlos', 'Ferreira', '8922-4002');
-INSERT INTO clients(name, lastname, phone) VALUES ('André', 'Santos', '4008-7922');
-INSERT INTO clients(name, lastname, phone) VALUES ('Márcia', 'Alves', '4052-8922');
+INSERT INTO clients(name, lastname, phone) VALUES ('Jorge', 'Santos', '4008-7922');
+INSERT INTO clients(name, lastname, phone) VALUES ('Eduarda', 'Alves', '4052-8922');
 INSERT INTO clients(name, lastname, phone) VALUES ('Bianca', 'Fernandes', '4002-8522');
 
 -- Orders
