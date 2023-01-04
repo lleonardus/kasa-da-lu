@@ -6,20 +6,48 @@ ordenar pedidos!
 
 ## 💿Como rodar na sua máquina
 
-**Pré requisitos:** Git e Java 17
+### Pré-requisitos
 
-``` shell
+- **Git**;
+- **Docker + Docker-Compose (caso queira utilizar Docker)**;
+- **Java 17 (caso queira utilizar o Maven)**
+
+<details>
+    <summary><b style="font-size:1.4em;">🐳Utilizando Docker</b></summary>
+
+```shell
 # Clone o repositório na sua máquina
 $ git clone https://github.com/lleonardus/kasa-da-lu.git
 
 # Abra a pasta do projeto
 $ cd kasa-da-lu
 
-# Inicie o projeto
+# Inicie o projeto usando Docker
+$ docker-compose up
+```
+
+Após esse processo, a API vai estar rodando em **http://localhost:8080**.
+
+</details>
+
+<details>
+    <summary><b style="font-size:1.4em;">♨️Utilizando Maven</b></summary>
+
+```shell
+# Clone o repositório na sua máquina
+$ git clone https://github.com/lleonardus/kasa-da-lu.git
+
+# Abra a pasta do projeto
+$ cd kasa-da-lu
+
+# Inicie o projeto usando Maven
 $ ./mvnw spring-boot:run
 ```
-Após esse processo, a API vai estar rodando em **http://localhost:8080** e o banco de dados (H2 database)
-pode ser acessado em **http://localhost:8080/h2-console/**
+
+Após esse processo, a API vai estar rodando em **http://localhost:8080**
+e o banco de dados (H2 database) pode ser acessado em **http://localhost:8080/h2-console/**
+
+</details>
 
 ## 💾Banco de Dados
 
