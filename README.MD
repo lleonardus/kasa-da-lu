@@ -26,7 +26,8 @@ $ cd kasa-da-lu
 $ docker-compose up
 ```
 
-Após esse processo, a API vai estar rodando em **http://localhost:8080**.
+Após esse processo, a API vai estar rodando em **http://localhost:8080** 
+e a documentação estará disponível em **http://localhost:8080/swagger-ui.html**.
 
 </details>
 
@@ -44,8 +45,9 @@ $ cd kasa-da-lu
 $ ./mvnw spring-boot:run
 ```
 
-Após esse processo, a API vai estar rodando em **http://localhost:8080**
-e o banco de dados (H2 database) pode ser acessado em **http://localhost:8080/h2-console/**
+Após esse processo, a API vai estar rodando em **http://localhost:8080**,
+a documentação estará disponível em **http://localhost:8080/swagger-ui.html**
+e o banco de dados (H2 database) poderá ser acessado em **http://localhost:8080/h2-console/**
 
 </details>
 
@@ -75,10 +77,6 @@ O parâmetro flavor permite os sabores **chocolate, doce de leite, tradicional e
 
 - **GET** `/kasa-da-lu/orders`: Retorna uma lista com todos os pedidos.
 
-### 👨‍🚀Postman🚀
-Caso tenha o Postman instalado na sua máquina e queira ver exemplos de como usar os endpoints,
-importe o arquivo que está na pasta `postman`.
-
 ## 🧰Ferramentas Utilizadas
 
 - Java 17
@@ -86,6 +84,6 @@ importe o arquivo que está na pasta `postman`.
 - Spring Web
 - Spring Data JPA
 - H2 Database
+- SpringDoc OpenAPI
 - Lombok
 - Model Mapper
-- Postman
