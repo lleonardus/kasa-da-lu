@@ -1,6 +1,7 @@
 package com.leonardus.kasadalu.services;
 
 import com.leonardus.kasadalu.dtos.ClientDTO;
+import com.leonardus.kasadalu.dtos.ClientInsertDTO;
 import com.leonardus.kasadalu.entities.Client;
 import com.leonardus.kasadalu.entities.FrenchToast;
 import com.leonardus.kasadalu.entities.Order;
@@ -39,12 +40,14 @@ class ClientServiceTest {
 
     Client client;
     ClientDTO clientDTO;
+    ClientInsertDTO clientInsertDTO;
     FrenchToast frenchToast;
 
     @BeforeEach
     void setUp() {
         client = new Client(1L,"name", "lastname","4002-8922", new ArrayList<>());
         clientDTO = new ClientDTO(1L,"name", "lastname","4002-8922");
+        clientInsertDTO = new ClientInsertDTO("name", "lastname","4002-8922");
         frenchToast = new FrenchToast();
 
         when(clientRepository.findAll()).thenReturn(List.of(client));
@@ -54,6 +57,7 @@ class ClientServiceTest {
 
         when(mapper.map(client, ClientDTO.class)).thenReturn(clientDTO);
         when(mapper.map(clientDTO, Client.class)).thenReturn(client);
+        when(mapper.map(clientInsertDTO, Client.class)).thenReturn(client);
     }
 
     @Test
@@ -80,7 +84,7 @@ class ClientServiceTest {
 
     @Test
     void create_WhenSuccessful_ReturnsAClientDTO() {
-        ClientDTO response = service.create(clientDTO);
+        ClientDTO response = service.create(clientInsertDTO);
 
         assertNotNull(response);
         assertEquals(clientDTO, response);
@@ -91,7 +95,7 @@ class ClientServiceTest {
         clientDTO.setName("name updated");
         clientDTO.setLastname("lastname updated");
         clientDTO.setPhone("new phone");
-        ClientDTO response = service.update(1L, clientDTO);
+        ClientDTO response = service.update(1L, clientInsertDTO);
 
         assertNotNull(response);
         assertEquals(clientDTO, response);
@@ -99,7 +103,7 @@ class ClientServiceTest {
     @Test
     void update_WhenNotSuccessful_ThrowsAnObjectNotFoundException() {
         when(clientRepository.findById(1L)).thenReturn(Optional.empty());
-        assertThrows(ObjectNotFoundException.class, ()-> service.update(1L, clientDTO));
+        assertThrows(ObjectNotFoundException.class, ()-> service.update(1L, clientInsertDTO));
     }
 
     @Test

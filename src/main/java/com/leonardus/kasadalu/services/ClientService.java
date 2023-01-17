@@ -1,6 +1,7 @@
 package com.leonardus.kasadalu.services;
 
 import com.leonardus.kasadalu.dtos.ClientDTO;
+import com.leonardus.kasadalu.dtos.ClientInsertDTO;
 import com.leonardus.kasadalu.entities.Client;
 import com.leonardus.kasadalu.entities.FrenchToast;
 import com.leonardus.kasadalu.entities.Order;
@@ -35,18 +36,16 @@ public class ClientService {
         return mapper.map(client, ClientDTO.class);
     }
 
-    public ClientDTO create(ClientDTO clientDTO){
-        Client client = mapper.map(clientDTO, Client.class);
-        Client createdClient = clientRepository.save(client);
-        clientDTO.setId(createdClient.getId());
-        return clientDTO;
+    public ClientDTO create(ClientInsertDTO clientInsertDTO){
+        Client client = mapper.map(clientInsertDTO, Client.class);
+        return mapper.map(clientRepository.save(client), ClientDTO.class);
     }
 
-    public ClientDTO update(Long id, ClientDTO clientDTO){
+    public ClientDTO update(Long id, ClientInsertDTO clientInsertDTO){
         Client client = this.findByIdOrElseThrowObjectNotFoundException(id);
-        client.setName(clientDTO.getName());
-        client.setLastname(clientDTO.getLastname());
-        client.setPhone(clientDTO.getPhone());
+        client.setName(clientInsertDTO.getName());
+        client.setLastname(clientInsertDTO.getLastname());
+        client.setPhone(clientInsertDTO.getPhone());
 
         return mapper.map(clientRepository.save(client), ClientDTO.class);
     }

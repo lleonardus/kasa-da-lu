@@ -2,6 +2,7 @@ package com.leonardus.kasadalu.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leonardus.kasadalu.dtos.ClientDTO;
+import com.leonardus.kasadalu.dtos.ClientInsertDTO;
 import com.leonardus.kasadalu.entities.Order;
 import com.leonardus.kasadalu.services.ClientService;
 import com.leonardus.kasadalu.services.exceptions.DataIntegrityViolationException;
@@ -35,17 +36,19 @@ class ClientControllerTest {
     ObjectMapper objectMapper;
 
     ClientDTO clientDTO;
+    ClientInsertDTO clientInsertDTO;
     Order order;
 
     @BeforeEach
     void setUp() {
         clientDTO = new ClientDTO();
+        clientInsertDTO = new ClientInsertDTO();
         order = new Order();
 
         when(service.findAll()).thenReturn(List.of(clientDTO));
         when(service.findById(1L)).thenReturn(clientDTO);
-        when(service.create(clientDTO)).thenReturn(clientDTO);
-        when(service.update(1L, clientDTO)).thenReturn(clientDTO);
+        when(service.create(clientInsertDTO)).thenReturn(clientDTO);
+        when(service.update(1L, clientInsertDTO)).thenReturn(clientDTO);
         when(service.buyToast(1L, "chocolate", 5)).thenReturn(order);
     }
 
@@ -81,7 +84,7 @@ class ClientControllerTest {
     @DisplayName("create returns 201")
     void create_WhenSuccessful_ReturnsAClientDTO() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.post("/kasa-da-lu/clients")
-                        .content(objectMapper.writeValueAsString(clientDTO))
+                        .content(objectMapper.writeValueAsString(clientInsertDTO))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.header().exists("Location"))
@@ -91,7 +94,7 @@ class ClientControllerTest {
     @Test
     void update_WhenSuccessful_ReturnsAClientDTO() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.put("/kasa-da-lu/clients/{id}", 1L)
-                        .content(objectMapper.writeValueAsString(clientDTO))
+                        .content(objectMapper.writeValueAsString(clientInsertDTO))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
@@ -99,10 +102,10 @@ class ClientControllerTest {
 
     @Test
     void update_WhenNotSuccessful_ThrowsAnObjectNotFoundException() throws Exception{
-        when(service.update(1L, clientDTO)).thenThrow(ObjectNotFoundException.class);
+        when(service.update(1L, clientInsertDTO)).thenThrow(ObjectNotFoundException.class);
 
         mockMvc.perform(MockMvcRequestBuilders.put("/kasa-da-lu/clients/{id}", 1L)
-                        .content(objectMapper.writeValueAsString(clientDTO))
+                        .content(objectMapper.writeValueAsString(clientInsertDTO))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
@@ -112,7 +115,6 @@ class ClientControllerTest {
     void buyToast_WhenSuccessful_ReturnsAnOrder() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.post("/kasa-da-lu/clients/{id}/buy?flavor={flavor}&quantity={quantity}",
                                 1L, "chocolate", 5)
-                        .content(objectMapper.writeValueAsString(clientDTO))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
